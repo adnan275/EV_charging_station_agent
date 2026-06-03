@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ---
 title: EV Agent Adnan
 emoji: ⚡
