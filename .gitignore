@@ -1,0 +1,13 @@
+test_segfault.py
+patch_models.py
+__pycache__/
+*.pyc
+.DS_Store
+.env
+chroma_db/
+venv/
+<<<<<<< HEAD
+.streamlit/
+=======
+.venv/
+>>>>>>> docs/add-model-card
