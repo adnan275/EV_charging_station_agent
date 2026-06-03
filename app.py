@@ -590,14 +590,16 @@ def simulate_station_load(ports: int, power_kw: float, is_fast_dc: bool, country
 try:
     llm = ChatGroq(
         api_key=api_key,
-        model="llama-3.3-70b-versatile",
-        temperature=0
+        model="llama-3.1-70b-versatile",
+        temperature=0,
+        max_retries=2
     )
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
+        # Use a more robust agent creation
         agent_executor = create_react_agent(
             llm, 
-            [search_ev_knowledge, check_station_existence, predict_fast_dc, explain_ml_prediction, simulate_station_load]
+            tools=[search_ev_knowledge, check_station_existence, predict_fast_dc, explain_ml_prediction, simulate_station_load]
         )
 except Exception as e:
     st.error(f"Failed to initialize AI Agent: {e}")
