@@ -48,66 +48,92 @@ st.markdown(
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
     
-    html, body, [data-testid="stAppViewContainer"] {
+    /* Pure Black Base */
+    html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
         font-family: 'Outfit', sans-serif;
-        background-color: #0b0f19;
-        color: #e2e8f0;
+        background-color: #000000 !important;
+        color: #ffffff !important;
     }
     
-    /* Sleek card containers */
-    .metric-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 16px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        margin-bottom: 15px;
-        transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .metric-card:hover {
-        transform: translateY(-2px);
-        border-color: #00e676;
-    }
-    
-    /* Sidebar styling */
+    /* Sidebar - Deepest Black */
     [data-testid="stSidebar"] {
-        background-color: #0e1322 !important;
+        background-color: #050505 !important;
         border-right: 1px solid rgba(255, 255, 255, 0.05);
     }
     
-    /* Header decoration */
+    /* Premium Card Design */
+    .metric-card {
+        background: #0a0a0a;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .metric-card:hover {
+        border-color: rgba(0, 255, 136, 0.3);
+        background: #0c0c0c;
+        transform: translateY(-2px);
+    }
+    
+    /* Typography Refinement */
     .main-title {
-        font-size: 2.3rem;
+        font-size: 2.8rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 5px;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        margin-bottom: 10px;
     }
     
-    /* Chat styling */
+    /* Subtle Accents */
+    .accent-text {
+        color: #00ff88;
+        font-weight: 600;
+    }
+    
+    /* Chat Interface - Minimalist */
     .stChatMessage {
-        background-color: rgba(255, 255, 255, 0.01) !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        border-radius: 12px !important;
-        margin-bottom: 10px !important;
-        padding: 12px !important;
+        background-color: #080808 !important;
+        border: 1px solid rgba(255, 255, 255, 0.03) !important;
+        border-radius: 8px !important;
+        margin-bottom: 12px !important;
     }
     
-    /* Streamlit buttons custom look */
+    /* Input Field */
+    [data-testid="stChatInput"] {
+        background-color: #0a0a0a !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+    }
+    
+    /* Buttons - Sleek & Dark */
     .stButton>button {
-        background: linear-gradient(135deg, #00e676 0%, #00c853 100%) !important;
+        background-color: #ffffff !important;
         color: #000000 !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         border: none !important;
-        border-radius: 8px !important;
-        transition: all 0.2s ease !important;
+        border-radius: 6px !important;
+        padding: 0.5rem 1.5rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.75rem !important;
     }
     .stButton>button:hover {
-        transform: scale(1.02) !important;
-        box-shadow: 0 0 15px rgba(0, 230, 118, 0.4) !important;
+        background-color: #00ff88 !important;
+        color: #000000 !important;
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.2) !important;
+    }
+    
+    /* Hide Streamlit Branding */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* Map Container */
+    [data-testid="stMap"] {
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        overflow: hidden;
     }
     </style>
     """,
