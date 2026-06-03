@@ -368,20 +368,26 @@ db = setup_rag()
 # Agent Tools Definition
 @tool
 def search_ev_knowledge(query: str) -> str:
-    """Search for factual information about EV charging infrastructure, connector standards, and EV charging speeds."""
+    """Search for factual information about EV charging standards, connector types, battery technology, and EV industry knowledge.
+    ONLY use this tool for general EV knowledge questions like 'What is CCS2?' or 'How fast is Level 3 charging?'.
+    Do NOT use this tool when the user asks about finding or locating charging stations - use check_station_existence instead.
+    """
     if db is None:
         return "Knowledge database offline."
     try:
-        results = db.similarity_search(query, k=2)
-        return "\n\n".join([doc.page_content for doc in results])
+        results = db.similarity_search(query, k=1)
+        if results:
+            return results[0].page_content
+        return "No relevant information found in the knowledge base."
     except Exception as e:
         return f"Database error: {str(e)}"
 
 
 @tool
 def check_station_existence(latitude: float, longitude: float, radius_km: float = 10.0) -> str:
-    """Checks if a charging station actually exists in reality within a given radius (in km) around coordinates.
-    Always run this check first when the user queries specific coordinates.
+    """Checks if a real charging station exists near given coordinates. Use this when a user asks 'where can I charge?', 'find stations near me', or mentions a city/location.
+    You MUST use this tool whenever the user asks about finding, locating, or checking charging stations.
+    Ask the user for coordinates if they provide a city name instead.
     """
     try:
         nearby = StationDatabase.find_nearby_stations(latitude, longitude, radius_km)
@@ -607,22 +613,20 @@ except Exception as e:
     
 # System Prompt
 SYSTEM_PROMPT = (
-    "You are an EV Charging Station Intelligent Assistant. Your purpose is to help users with topics strictly related to electric vehicles (EVs) and EV charging infrastructure.\n\n"
-    "You carry out the following workflows:\n"
-    "1. Answer factual questions about EV charging using the `search_ev_knowledge` tool.\n"
-    "2. Check if a station actually exists in reality near specific coordinates using `check_station_existence`. Always check this first if the user provides coordinates.\n"
-    "3. Predict if a location has a Fast DC charging station using the `predict_fast_dc` tool (for new location planning).\n"
-    "4. Explain the ML model's prediction decision drivers using the `explain_ml_prediction` tool.\n"
-    "5. Run a real-time engineering simulation for a station's power grid impact, queuing wait times, and carbon offset using the `simulate_station_load` tool.\n\n"
-    "IMPORTANT: Always use the provided tools to answer questions. If you need to call a tool, format your response correctly as a tool call.\n\n"
-    "STRICT GUARDRAILS:\n"
-    "- If the user's question is NOT related to EVs, charging stations, or related infrastructure, "
-    "you MUST gracefully decline and state that you only assist with topics related to electric vehicles and charging.\n"
-    "- When coordinates are checked, if a station exists, explain it and suggest simulating the grid and queue load using `simulate_station_load`.\n"
-    "- If no station exists, suggest predicting suitability using `predict_fast_dc` and explaining the prediction using `explain_ml_prediction`.\n"
-    "- If the user asks for coordinates check or prediction, you must collect country_code, latitude, longitude, and number of ports. "
-    "Ask for these one at a time if they are missing.\n"
-    "Stay strictly within the EV domain and provide concise, accurate help."
+    "You are an EV Charging Station Intelligent Assistant. You help users with electric vehicle charging topics ONLY.\n\n"
+    "TOOL ROUTING RULES (follow these strictly):\n"
+    "- If the user asks WHERE to charge, FIND stations, or mentions a CITY/LOCATION: Ask for latitude and longitude, then call `check_station_existence`.\n"
+    "- If the user asks general EV KNOWLEDGE questions (e.g. 'what is CCS2?', 'how fast is Level 3?'): Call `search_ev_knowledge`.\n"
+    "- If the user asks to PREDICT suitability for a new location: Call `predict_fast_dc`.\n"
+    "- If the user asks WHY a prediction was made: Call `explain_ml_prediction`.\n"
+    "- If the user asks to SIMULATE grid load or queue times: Call `simulate_station_load`.\n\n"
+    "IMPORTANT RULES:\n"
+    "1. Call ONLY ONE tool at a time. Wait for the result before deciding the next step.\n"
+    "2. Do NOT use `search_ev_knowledge` when the user asks about finding or locating stations. Use `check_station_existence` instead.\n"
+    "3. If the user mentions a city (like 'Delhi', 'Mumbai') but not coordinates, ask them for the latitude and longitude.\n"
+    "4. Keep your responses concise and actionable. Do not dump raw data.\n"
+    "5. If the question is NOT about EVs or charging, politely decline.\n"
+    "6. After checking station existence, suggest running a simulation. After prediction, suggest explanation.\n"
 )
 
 if "messages" not in st.session_state:
