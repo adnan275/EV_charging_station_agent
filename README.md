@@ -70,17 +70,7 @@ The architecture follows the ReAct (Reasoning and Acting) paradigm, enabling the
 
 * Encapsulated the ML pipeline as a LangChain tool.
 * Integrated a RAG layer for dynamic knowledge retrieval.
-* Implemented a LangGraph-based state machine to manage multi-turn interactions and decision-making.
 
----
-
-## Setup and Installation
-
-### 1. Clone the Repository
-
-```bash
-git clone <repository_url>
-=======
 # ⚡ EV Charging Station AI Agent
 ### From Predictive Analytics to Agentic Intelligence
 
