@@ -700,22 +700,17 @@ with col1:
             st.warning(f"⏳ Please wait {wait_time} seconds before your next interaction.")
         else:
             st.session_state.last_request_time = time.time()
-            
-            user_msg = HumanMessage(content=prompt)
-            st.session_state.messages.append(user_msg)
-            
-            # Display user message instantly
+            st.session_state.messages.append(HumanMessage(content=prompt))
             st.rerun()
 
-# Run agent response generation outside of column blocks to avoid layout glitches, 
-# then append and rerun to update dashboard.
+# Run agent response generation
 if st.session_state.messages and isinstance(st.session_state.messages[-1], HumanMessage):
     with col1:
         with st.chat_message("assistant"):
             with st.spinner("Analyzing EV infrastructure context..."):
                 try:
                     response = agent_executor.invoke({"messages": st.session_state.messages})
-                    
+                    # Extract only the new messages from the agent
                     new_msgs = response["messages"][len(st.session_state.messages):]
                     for m in new_msgs:
                         st.session_state.messages.append(m)
