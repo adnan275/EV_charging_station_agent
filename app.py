@@ -590,9 +590,9 @@ def simulate_station_load(ports: int, power_kw: float, is_fast_dc: bool, country
 try:
     llm = ChatGroq(
         api_key=api_key,
-        model="mixtral-8x7b-32768",
+        model="llama-3.1-8b-instant",
         temperature=0,
-        max_retries=2
+        max_retries=3
     )
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -614,6 +614,7 @@ SYSTEM_PROMPT = (
     "3. Predict if a location has a Fast DC charging station using the `predict_fast_dc` tool (for new location planning).\n"
     "4. Explain the ML model's prediction decision drivers using the `explain_ml_prediction` tool.\n"
     "5. Run a real-time engineering simulation for a station's power grid impact, queuing wait times, and carbon offset using the `simulate_station_load` tool.\n\n"
+    "IMPORTANT: Always use the provided tools to answer questions. If you need to call a tool, format your response correctly as a tool call.\n\n"
     "STRICT GUARDRAILS:\n"
     "- If the user's question is NOT related to EVs, charging stations, or related infrastructure, "
     "you MUST gracefully decline and state that you only assist with topics related to electric vehicles and charging.\n"
@@ -630,7 +631,7 @@ if "messages" not in st.session_state:
 # Render Sidebar Manager
 with st.sidebar:
     st.markdown('<div class="main-title" style="font-size: 1.5rem;">⚡ EV Agent Panel</div>', unsafe_allow_html=True)
-    st.markdown("**Core LLM:** `mixtral-8x7b-32768`")
+    st.markdown("**Core LLM:** `llama-3.1-8b-instant`")
     st.markdown("**ML Models:** RandomForest + XGBoost")
     st.markdown("**Simulation Core:** M/M/c Queuing + Local Grid Model")
     st.markdown("---")
