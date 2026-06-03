@@ -6,121 +6,105 @@ colorTo: green
 sdk: docker
 app_port: 8501
 ---
-# EV Charging Station AI Agent
 
-### From Predictive Analytics to Agentic Intelligence
-
-## Project Overview
-
-This project represents the evolution of an EV Charging Station Classifier into a fully agentic AI system. Initially developed as a machine learning pipeline to predict whether a station supports Fast DC Charging, the system has been extended into an autonomous conversational agent capable of reasoning, retrieving domain knowledge, and executing predictive workflows.
-
-The architecture follows the ReAct (Reasoning and Acting) paradigm, enabling the agent to interact with users, gather required inputs iteratively, and deliver insights supported by both machine learning models and a retrieval-augmented knowledge base.
-
----
-
-## Key Features
-
-* **Agentic Orchestration**
-  Built using LangGraph, the system maintains conversational state and dynamically decides when to invoke tools.
-
-* **Retrieval-Augmented Generation (RAG)**
-  ChromaDB is used to store and retrieve EV infrastructure knowledge for contextual responses.
-
-* **Ensemble Machine Learning**
-  Combines RandomForest and XGBoost models to improve classification accuracy and recall.
-
-* **Rate Limiting Mechanism**
-  A 5-second cooldown prevents excessive API usage and protects system quotas.
-
-* **Automated Credential Management**
-  API keys are securely loaded from environment variables or Streamlit secrets.
-
----
-
-## Technology Stack
-
-| Layer               | Technology                |
-| ------------------- | ------------------------- |
-| Agent Framework     | LangGraph₹    |
-| Core LLM            | Google Gemini (1.5-flash) |
-| Vector Database     | ChromaDB                  |
-| Machine Learning    | Scikit-learn, XGBoost     |
-| Data Processing     | Pandas, NumPy             |
-| Embeddings          | ONNX MiniLM-L6-V2         |
-| Backend & Interface | Streamlit                 |
-| Model Persistence   | Joblib, Pickle            |
-
----
-
-## System Evolution
-
-### Phase 1: Core ML Pipeline
-
-* Developed baseline classification models using RandomForest and XGBoost.
-* Addressed class imbalance using `class_weight='balanced'`.
-* Established evaluation metrics including ROC AUC and F1-score.
-
-### Phase 2: Optimization and Enhancement
-
-* Introduced feature engineering techniques such as interaction terms (Latitude × Longitude) and polynomial transformations (Ports²).
-* Applied hyperparameter tuning using `RandomizedSearchCV`.
-* Built an ensemble model using weighted probability averaging to improve recall performance.
-
-### Phase 3: Agentic Integration
-
-* Encapsulated the ML pipeline as a LangChain tool.
-* Integrated a RAG layer for dynamic knowledge retrieval.
+<div align="center">
 
 # ⚡ EV Charging Station AI Agent
-### From Predictive Analytics to Agentic Intelligence
+
+**From Predictive Analytics to Agentic Intelligence**
+
+[![Live Demo](https://img.shields.io/badge/🤗_Hugging_Face-Live_Demo-blue?style=for-the-badge)](https://huggingface.co/spaces/rizzzvi/ev-charging-agent)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
+
+</div>
+
+---
 
 ## 🚀 Project Overview
-This project represents the evolution of an EV Charging Station Classifier into a sophisticated **Agentic AI System**. Originally designed as a machine learning pipeline to predict 'Fast DC Charger' status, it now features a fully autonomous conversational agent capable of reasoning, researching domain-specific facts, and executing complex predictive workflows.
 
-The system uses a **ReAct (Reasoning and Acting)** pattern to interact with users, gathering necessary data points sequentially and providing insights backed by both statistical models and a Retrieval-Augmented Generation (RAG) knowledge base.
+This project represents the evolution of an EV Charging Station Classifier into a sophisticated **Agentic AI System**. Originally a machine learning pipeline to predict **Fast DC Charger** suitability, it now features a fully autonomous conversational agent capable of:
+
+- **Reasoning** over user queries using the ReAct paradigm
+- **Retrieving** domain-specific EV knowledge via RAG (Retrieval-Augmented Generation)
+- **Predicting** station suitability using ensemble ML models
+- **Simulating** real-time grid load, queue times, and carbon offset
+
+The agent gathers necessary data points conversationally, executes the right tools at the right time, and delivers actionable infrastructure insights.
 
 ---
 
 ## 🌟 Key Features
-- **Agentic Orchestration**: Built with **LangGraph**, the agent maintains conversation state and intelligently decides when to use tools.
-- **RAG Knowledge Base**: Uses **ChromaDB** to store and retrieve domain-specific EV infrastructure facts.
-- **Ensemble ML Prediction**: Combines **RandomForest** and **XGBoost** models for high-precision station classification.
-- **Rate Limiting**: Built-in 5-second cooldown to manage API usage and protect quotas.
-- **Automated Key Management**: Automatically retrieves credentials from environment variables or Streamlit secrets.
+
+| Feature | Description |
+|:---|:---|
+| 🤖 **Agentic Orchestration** | Built with **LangGraph** — maintains conversation state and dynamically selects tools |
+| 📚 **RAG Knowledge Base** | **ChromaDB** stores and retrieves 80+ EV infrastructure facts for contextual answers |
+| 🧠 **Ensemble ML Prediction** | Combines **RandomForest + XGBoost** for high-precision Fast DC classification |
+| 🗺️ **Geospatial Station Search** | Haversine-based search over **240K+ real-world stations** with interactive map |
+| ⚡ **Grid & Queue Simulation** | M/M/c queuing model + transformer load simulation with real-time metrics |
+| 🌱 **Carbon Impact Calculator** | Country-specific CO₂ savings vs. gasoline vehicles with tree-equivalence |
+| 🧬 **Explainable AI (XAI)** | Feature contribution analysis explaining why the ML model made its decision |
+| 🔒 **Rate Limiting** | Built-in 5-second cooldown to protect API quotas |
 
 ---
 
 ## 🛠️ Technology Stack
 
 | Layer | Technology |
-| :--- | :--- |
+|:---|:---|
 | **Agent Framework** | LangGraph, LangChain |
-| **Core LLM** | Google Gemini (1.5-flash) |
-| **Vector Database** | ChromaDB (RAG) |
+| **Core LLM** | Groq (Llama 3.1 8B Instant) |
+| **Vector Database** | ChromaDB |
 | **Machine Learning** | Scikit-learn, XGBoost |
-| **Data Manipulation** | Pandas, Numpy |
-| **Embeddings** | ONNX MiniLM-L6-V2 (Lightweight Local) |
-| **Backend & UI** | Streamlit |
-| **Model Persistence** | Joblib, Pickle |
+| **Simulation Engine** | M/M/c Queuing Theory, Grid Load Model |
+| **Data Processing** | Pandas, NumPy |
+| **Embeddings** | ONNX MiniLM-L6-V2 (Local, No API) |
+| **Frontend & Backend** | Streamlit |
+| **Deployment** | Docker, Hugging Face Spaces |
 
 ---
 
-## 📈 System Evolution
+## 📈 System Architecture
 
-### Phase 1: Core ML Pipeline (Milestone 1)
-- Developed baseline models using RandomForest and XGBoost.
-- Implemented class imbalance handling (`class_weight='balanced'`) to address the rarity of Fast DC Chargers in the dataset.
-- Established primary preprocessing and evaluation metrics (ROC AUC, F1-score).
+```mermaid
+graph LR
+    A[User Query] --> B[LangGraph Agent]
+    B --> C{Tool Router}
+    C --> D[🔍 RAG Search<br/>ChromaDB]
+    C --> E[📍 Station Lookup<br/>Haversine Search]
+    C --> F[🧠 ML Prediction<br/>RF + XGBoost]
+    C --> G[⚡ Simulation<br/>Grid + Queue]
+    C --> H[🧬 XAI Engine<br/>Feature Analysis]
+    D --> I[Response]
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+```
 
-### Phase 2: Optimized Solution (Milestone 2)
-- **Advanced Feature Engineering**: Interaction terms (Lat x Lon) and squared terms (Ports²) to capture non-linear relationships.
-- **Hyperparameter Tuning**: Optimized models via `RandomizedSearchCV`.
-- **Ensemble Modeling**: Created a weighted probability-averaging ensemble for superior recall.
+---
 
-### Phase 3: Agentic Integration (Current)
-- Wrapped the ML pipeline into a LangChain Tool.
-- Integrated a RAG layer for "Knowledge-on-Demand".
-- Implemented the LangGraph state machine to handle multi-turn information gathering.
+## 📊 System Evolution
+
+### Phase 1 — Core ML Pipeline
+- Developed baseline classification using **RandomForest** and **XGBoost**
+- Handled class imbalance with `class_weight='balanced'`
+- Established evaluation metrics: **ROC AUC, F1-score, Precision, Recall**
+
+### Phase 2 — Optimization & Feature Engineering
+- **Interaction terms**: `Latitude × Longitude`, `Ports × Latitude`
+- **Polynomial features**: `Ports²`, `Latitude²`, `Longitude²`
+- **Hyperparameter tuning** via `RandomizedSearchCV`
+- **Ensemble modeling** using weighted probability averaging
+
+### Phase 3 — Agentic Integration *(Current)*
+- Wrapped ML pipeline as a **LangChain Tool**
+- Integrated **RAG layer** with 80+ curated EV knowledge facts
+- Built **LangGraph state machine** for multi-turn conversation management
+- Added **real-time simulation engine** (queuing + grid + carbon)
+- Deployed as **Docker container** on Hugging Face Spaces
 
 ---
 
@@ -128,89 +112,71 @@ The system uses a **ReAct (Reasoning and Acting)** pattern to interact with user
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/garariya/EV_charging_station_model.git
->>>>>>> docs/add-model-card
-cd EV_charging_station_model
+git clone https://github.com/adnan275/EV_charging_station_agent.git
+cd EV_charging_station_agent
 ```
 
 ### 2. Install Dependencies
-<<<<<<< HEAD
-
-It is recommended to use a virtual environment.
-
 ```bash
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Model and Data Setup
-
-Ensure the following files are available in the root directory:
-
-* `rf_balanced_retrained_fe.joblib`
-* `xgb_cs_retrained_fe.joblib`
-* `scaler.joblib`
-* `label_encoder.pkl`
-* `optimal_threshold.pkl`
-
-### 4. Run the Application
-
-=======
-It is recommended to use a virtual environment.
+### 3. Set Environment Variables
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+# Create a .env file in the root directory
+echo "GROQ_API_KEY=your_groq_api_key_here" > .env
 ```
 
-### 3. Model & Data Setup
-Ensure the following artifacts are in the root directory:
-- `rf_balanced_retrained_fe.joblib`
-- `xgb_cs_retrained_fe.joblib`
-- `scaler.joblib`
-- `label_encoder.pkl`
-- `optimal_threshold.pkl`
-
 ### 4. Run the Application
->>>>>>> docs/add-model-card
 ```bash
 streamlit run app.py
 ```
 
----
-
-<<<<<<< HEAD
-## Usage Guide
-
-* **Initialization**
-  Configure your `GOOGLE_API_KEY` via `.env` or Streamlit secrets before launching the application.
-
-* **Knowledge Queries**
-  Ask domain-related questions (e.g., differences between AC and DC charging) to utilize the RAG system.
-
-* **Prediction Workflow**
-  Request a prediction, and the agent will guide you through required inputs step-by-step.
-
-* **Rate Limiting Behavior**
-  If interactions occur too rapidly, the system will enforce a short delay before accepting the next request.
+The app will launch at `http://localhost:8501`
 
 ---
 
-## Contributors
+## 🤖 How to Use the Agent
 
-Developed as part of a collaborative effort focused on intelligent intervention in EV infrastructure systems.
-=======
-## 🤖 How to Interact with the Agent
-1. **Automated Setup**: Once you have your `GOOGLE_API_KEY` in your `.env` or Streamlit Secrets, just start the app! No manual token entry required.
-2. **Chat Naturally**: Ask questions like *"What is the difference between AC and DC charging?"* to trigger the RAG knowledge search.
-3. **Run a Prediction**: Ask the agent to predict a station status, and it will guide you through the necessary inputs.
-4. **Rate Limiting**: If you message too quickly, the system will ask you to wait a few seconds before your next interaction.
+| Action | Example Query |
+|:---|:---|
+| **Find Stations** | *"Are there any charging stations near 28.61, 77.20?"* |
+| **ML Prediction** | *"Predict if 12.97, 77.59 with 8 ports is suitable for Fast DC"* |
+| **Grid Simulation** | *"Run a load simulation for 10 ports at 350kW"* |
+| **Explainable AI** | *"Why did the model predict that?"* |
+| **EV Knowledge** | *"What is the difference between CCS2 and CHAdeMO?"* |
 
 ---
 
-## 👥 Contributors
-Developed as part of a team effort focusing on Intelligent Intervention in EV infrastructure.
+## 📁 Project Structure
 
-**Maintained by**: [garariya](https://github.com/garariya)
->>>>>>> docs/add-model-card
+```
+EV_charging_station_agent/
+├── app.py                          # Main Streamlit application + Agent logic
+├── simulation_engine.py            # Queuing, Grid, Carbon simulation models
+├── charging_station.csv            # 240K+ real-world station records
+├── rf_balanced_retrained_fe.joblib # Trained RandomForest model
+├── xgb_cs_retrained_fe.joblib      # Trained XGBoost model
+├── scaler.joblib                   # Feature scaler
+├── label_encoder.pkl               # Label encoder for country codes
+├── optimal_threshold.pkl           # Ensemble decision threshold
+├── requirements.txt                # Python dependencies
+├── Dockerfile                      # Container configuration
+└── README.md                       # This file
+```
+
+---
+
+## 🌐 Live Demo
+
+**Try the agent live →** [huggingface.co/spaces/rizzzvi/ev-charging-agent](https://huggingface.co/spaces/rizzzvi/ev-charging-agent)
+
+---
+
+<div align="center">
+
+**Built by [Adnan Rizvi](https://github.com/adnan275)**
+
+</div>
