@@ -590,7 +590,7 @@ def simulate_station_load(ports: int, power_kw: float, is_fast_dc: bool, country
 try:
     llm = ChatGroq(
         api_key=api_key,
-        model="llama-3.1-70b-versatile",
+        model="mixtral-8x7b-32768",
         temperature=0,
         max_retries=2
     )
@@ -630,7 +630,7 @@ if "messages" not in st.session_state:
 # Render Sidebar Manager
 with st.sidebar:
     st.markdown('<div class="main-title" style="font-size: 1.5rem;">⚡ EV Agent Panel</div>', unsafe_allow_html=True)
-    st.markdown("**Core LLM:** `llama-3.3-70b-versatile`")
+    st.markdown("**Core LLM:** `mixtral-8x7b-32768`")
     st.markdown("**ML Models:** RandomForest + XGBoost")
     st.markdown("**Simulation Core:** M/M/c Queuing + Local Grid Model")
     st.markdown("---")
