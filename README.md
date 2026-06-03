@@ -1,13 +1,4 @@
----
-title: EV Agent Adnan
-emoji: ⚡
-colorFrom: blue
-colorTo: green
-sdk: docker
-app_port: 8501
----
 
-<div align="center">
 
 # ⚡ EV Charging Station AI Agent
 
